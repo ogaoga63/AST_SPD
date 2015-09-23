@@ -245,7 +245,8 @@ class ClangSPD:
                 #add :if
                 #we've assumed these are called from {if(else), while, for, compound}_stmt
                 if call_from is "IF_STMT" and cnt == 2:
-                    self.output.append(indent[1:] + ":else " + self.mydict[step.kind.name] + self.__getTokens__(step) + "\n")
+                    self.output.append(indent[1:] + ":else\n")
+                    self.output.append(indent + self.mydict[step.kind.name] + self.__getTokens__(step) + "\n")
                     self.__actLoop__(step, indent + "\t", step.kind.name, depth+1)
                 else:
                     self.output.append(indent + self.mydict[step.kind.name] + self.__getTokens__(step) + "\n")
@@ -345,7 +346,7 @@ class ClangSPD:
 	#end for
 
 	# call recursive function __actLoop__
-	self.__actLoop__(first, "", "", 0)
+	self.__actLoop__(first, "", first.kind.name, 0)
 
 	# After the recursion, we should close the PAD by ":terminal END\n"
 	self.output.append(":terminal END\n")
